@@ -13,10 +13,17 @@ use Inertia\Response;
 
 class DailyReportController extends Controller
 {
+    /**
+     * トップページの表示
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function index(Request $request): Response
     {
         return Inertia::render('DailyReport/Index', [
-            'name' => '私です',
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
         ]);
     }
     // /**
