@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'daily_report'], function() {
         Route::get('/', [DailyReportController::class, 'index'])->name('daily_report');
+        Route::patch('/', [DailyReportController::class, 'update'])->name('daily_report.update');
     });
 });
 

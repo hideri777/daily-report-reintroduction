@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DailyReportUpdateRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -22,36 +23,26 @@ class DailyReportController extends Controller
     public function index(Request $request): Response
     {
         return Inertia::render('DailyReport/Index', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            // 投げるならこんな感じ
             'status' => session('status'),
         ]);
     }
-    // /**
-    //  * Display the user's profile form.
-    //  */
-    // public function edit(Request $request): Response
-    // {
-    //     return Inertia::render('Profile/Edit', [
-    //         'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-    //         'status' => session('status'),
-    //     ]);
-    // }
 
-    // /**
-    //  * Update the user's profile information.
-    //  */
-    // public function update(ProfileUpdateRequest $request): RedirectResponse
-    // {
-    //     $request->user()->fill($request->validated());
+    /**
+     * Update the user's profile information.
+     */
+    public function update(DailyReportUpdateRequest $request): RedirectResponse
+    {
+        $request->user()->fill($request->validated());
 
-    //     if ($request->user()->isDirty('email')) {
-    //         $request->user()->email_verified_at = null;
-    //     }
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
 
-    //     $request->user()->save();
+        $request->user()->save();
 
-    //     return Redirect::route('profile.edit');
-    // }
+        return Redirect::route('daily_report');
+    }
 
     // /**
     //  * Delete the user's account.

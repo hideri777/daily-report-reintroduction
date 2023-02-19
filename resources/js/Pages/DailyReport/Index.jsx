@@ -1,8 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import UpdateDailyReportInformationForm from './Partials/UpdateDailyReportInformationForm';
 import { Head } from "@inertiajs/react";
 
-export default function Index({ auth, mustVerifyEmail, status }) {
+export default function Index({ auth }) {
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -13,9 +13,7 @@ export default function Index({ auth, mustVerifyEmail, status }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
+                        <UpdateDailyReportInformationForm
                             className="max-w-xl"
                         />
                     </div>
