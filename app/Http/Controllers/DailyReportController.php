@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DailyReportUpdateRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileUpdateRequest;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,14 +35,14 @@ class DailyReportController extends Controller
      */
     public function update(DailyReportUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $data = $request->all();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        $data['user_id']        = $request->user()->id;
+        $data['working_day']    = now();
+        $data['working_start']  = new Carbon($request->input('working_start'));
+        $data['working_end']    = new Carbon($request->input('working_end'));
 
-        $request->user()->save();
-
+        DB::table('daily_reports')->insert($data);
         return Redirect::route('daily_report');
     }
 

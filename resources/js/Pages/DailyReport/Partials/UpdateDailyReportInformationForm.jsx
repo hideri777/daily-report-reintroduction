@@ -12,15 +12,18 @@ export default function UpdateDailyReportInformationForm({ className }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
-        email: user.email,
         mail_magazine: '',
+        this_business_content: '',
+        next_business_content: '',
+        learning: '',
+        others: '',
+        working_start: new Date(),
+        working_end: new Date(),
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        // patch(route('profile.update'));
         patch(route('daily_report.update'));
     };
 
@@ -45,7 +48,11 @@ export default function UpdateDailyReportInformationForm({ className }) {
                         <DatePicker
                             dateFormat='yyyy/MM/dd HH:mm'
                             selected={fromdate}
-                            onChange={(e) => setFromDate(e)}
+                            onChange={(e) => {
+                                console.log(e);
+                                setFromDate(e);
+                                setData('working_start', e);
+                            }}
                             showTimeSelect
                             timeIntervals={15}
                         />
@@ -55,24 +62,60 @@ export default function UpdateDailyReportInformationForm({ className }) {
                         <DatePicker
                             dateFormat='yyyy/MM/dd HH:mm'
                             selected={enddate}
-                            onChange={(e) => setEndDate(e)}
+                            onChange={(e) => {
+                                setEndDate(e);
+                                setData('working_end', e);
+                            }}
                             showTimeSelect
                             timeIntervals={15}
                         />
                     </div>
                 </div>
 
-                <label for="mail_magazine" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">メルマガ</label>
-                <textarea id="mail_magazine" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="メルマガ読んでの感想"></textarea>
+                <label htmlFor="mail_magazine" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">メルマガ</label>
+                <textarea
+                    id="mail_magazine"
+                    rows="4"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="メルマガ読んでの感想"
+                    onChange={(e) => setData('mail_magazine', e.target.value)}
+                ></textarea>
 
-                <label for="this_business_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">今日やったこと</label>
-                <textarea id="this_business_content" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="今日やったこと"></textarea>
+                <label htmlFor="this_business_content" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">今日やったこと</label>
+                <textarea
+                    id="this_business_content"
+                    rows="4"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="今日やったこと"
+                    onChange={(e) => setData('this_business_content', e.target.value)}
+                ></textarea>
 
-                <label for="next_business_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">次回やること</label>
-                <textarea id="next_business_content" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="次回やること"></textarea>
+                <label htmlFor="next_business_content" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">次回やること</label>
+                <textarea
+                    id="next_business_content"
+                    rows="4"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="次回やること"
+                    onChange={(e) => setData('next_business_content', e.target.value)}
+                ></textarea>
 
-                <label for="next_business_content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">学び・気づき</label>
-                <textarea id="next_business_content" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="学び・気づき"></textarea>
+                <label htmlFor="learning" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">学び・気づき</label>
+                <textarea
+                    id="learning"
+                    rows="4"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="学び・気づき"
+                    onChange={(e) => setData('learning', e.target.value)}
+                ></textarea>
+
+                <label htmlFor="others" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">その他</label>
+                <textarea
+                    id="others"
+                    rows="4"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="その他"
+                    onChange={(e) => setData('others', e.target.value)}
+                ></textarea>
 
                 {/* <div>
                     <InputLabel for="name" value="Name" />
