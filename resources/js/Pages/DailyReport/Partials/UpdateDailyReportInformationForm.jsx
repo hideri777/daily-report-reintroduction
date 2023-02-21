@@ -35,10 +35,9 @@ export default function UpdateDailyReportInformationForm({ className }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">日報内容の編集</h2>
-                {/* 必要ならここにサブメッセージ書くよ */}
-                {/* <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
-                </p> */}
+                <p className="mt-1 text-sm text-gray-600">
+                    今日の日報
+                </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
@@ -116,38 +115,6 @@ export default function UpdateDailyReportInformationForm({ className }) {
                     placeholder="その他"
                     onChange={(e) => setData('others', e.target.value)}
                 ></textarea>
-
-                {/* <div>
-                    <InputLabel for="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.name}
-                        handleChange={(e) => setData('name', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
-                    />
-
-                    <InputError className="mt-2" message={errors.name} />
-                </div>
-
-                <div>
-                    <InputLabel for="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        className="mt-1 block w-full"
-                        value={data.email}
-                        handleChange={(e) => setData('email', e.target.value)}
-                        required
-                        autoComplete="email"
-                    />
-
-                    <InputError className="mt-2" message={errors.email} />
-                </div> */}
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton processing={processing}>Save</PrimaryButton>

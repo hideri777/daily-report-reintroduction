@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TodayDailyReportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'daily_report'], function() {
         Route::get('/', [DailyReportController::class, 'index'])->name('daily_report');
         Route::patch('/', [DailyReportController::class, 'update'])->name('daily_report.update');
+    });
+
+    Route::group(['prefix' => 'today_daily_report'], function() {
+        Route::get('/', [TodayDailyReportController::class, 'index'])->name('today_daily_report');
     });
 });
 
