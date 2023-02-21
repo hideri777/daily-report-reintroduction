@@ -39,9 +39,9 @@ class DailyReportController extends Controller
 
         $data['user_id']        = $request->user()->id;
         $data['working_day']    = now();
+        // TODO: ここのrequestの時間がおかしい utcになってる
         $data['working_start']  = new Carbon($request->input('working_start'));
         $data['working_end']    = new Carbon($request->input('working_end'));
-
         DB::table('daily_reports')->insert($data);
         return Redirect::route('daily_report');
     }
