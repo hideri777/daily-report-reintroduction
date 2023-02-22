@@ -3,7 +3,7 @@ import { Head } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function Index({ auth, data }) {
-    const makeStartDate = () => {
+    const makeStartDate = (data) => {
         const weekDay = {
             0: '日',
             1: '月',
@@ -25,14 +25,19 @@ export default function Index({ auth, data }) {
         return `${year}年${month}月${day}日(${dayOfWeek}) ${hours}:${minutes}`;
     }
 
-    const makeEndDate = () => {
+    const makeEndDate = (data) => {
         const endDate = new Date(data.working_end);
         const endHours = endDate.getHours().toString().padStart(2, '0');
         const endMinutes = endDate.getMinutes().toString().padStart(2, '0');
         return `${endHours}:${endMinutes}`
     }
 
-    const [copyText, setCopyText] = useState(`● 勤務時間\n${makeStartDate()} - ${makeEndDate()}\n\n● メルマガ\n${data.mail_magazine}\n\n● 本日の業務内容\n${data.this_business_content}\n\n● 次回の業務内容\n${data.next_business_content}\n\n● 本日気づいたこと・勉強になったこと・課題に感じたこと\n${data.learning}\n\n● その他\n${data.others}`);
+    const createOriginalText = () => {
+        if (data === null) return '';
+        return `● 勤務時間\n${makeStartDate(data)} - ${makeEndDate(data)}\n\n● メルマガ\n${data.mail_magazine}\n\n● 本日の業務内容\n${data.this_business_content}\n\n● 次回の業務内容\n${data.next_business_content}\n\n● 本日気づいたこと・勉強になったこと・課題に感じたこと\n${data.learning}\n\n● その他\n${data.others}`
+    }
+
+    const [copyText, setCopyText] = useState(createOriginalText());
 
     const copy = () => {
         navigator.clipboard.writeText(copyText)
@@ -46,7 +51,7 @@ export default function Index({ auth, data }) {
     return (
         <AuthenticatedLayout
             auth={auth}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">日報作成</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">今日の日報</h2>}
         >
             <Head title="日報作成"/>
             <div className="py-12">
