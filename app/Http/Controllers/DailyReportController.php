@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DailyReportUpdateRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\DailyReport;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -25,7 +26,6 @@ class DailyReportController extends Controller
     public function index(Request $request): Response
     {
         return Inertia::render('DailyReport/Index', [
-            // 投げるならこんな感じ
             'status' => session('status'),
         ]);
     }
@@ -41,7 +41,8 @@ class DailyReportController extends Controller
         // TODO: ここのrequestの時間がおかしい utcになってる
         $data['working_start']  = new Carbon($request->input('working_start'));
         $data['working_end']    = new Carbon($request->input('working_end'));
-        DB::table('daily_reports')->insert($data);
+        $dailyReport = new DailyReport();
+        $dailyReport->create($data);
         return Redirect::route('daily_report');
     }
 

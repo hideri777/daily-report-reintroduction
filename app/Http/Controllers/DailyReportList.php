@@ -17,8 +17,7 @@ class DailyReportList extends Controller
      */
     public function index(Request $request): Response
     {
-        $data = DB::table('daily_reports')->where(['user_id' => $request->user()->id])->orderBy('created_at')->get();
-dump($data);
+        $data = DB::table('daily_reports')->where(['user_id' => $request->user()->id])->orderByDesc('created_at')->get();
         return Inertia::render('DailyReportList/Index', [
             'data' => $data,
         ]);
