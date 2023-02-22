@@ -1,11 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-// import UpdateDailyReportInformationForm from './Partials/UpdateDailyReportInformationForm';
 import { Head } from "@inertiajs/react";
-// import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useState } from "react";
 
 export default function Index({ auth, data }) {
-    // const state = {value: '', copied: false};
-
     const makeStartDate = () => {
         const weekDay = {
             0: '日',
@@ -35,8 +32,9 @@ export default function Index({ auth, data }) {
         return `${endHours}:${endMinutes}`
     }
 
+    const [copyText, setCopyText] = useState(`● 勤務時間\n${makeStartDate()} - ${makeEndDate()}\n\n● メルマガ\n${data.mail_magazine}\n\n● 本日の業務内容\n${data.this_business_content}\n\n● 次回の業務内容\n${data.next_business_content}\n\n● 本日気づいたこと・勉強になったこと・課題に感じたこと\n${data.learning}\n\n● その他\n${data.others}`);
+
     const copy = () => {
-        const copyText = `● 勤務時間\n${makeStartDate()} - ${makeEndDate()}\n\n● メルマガ\n${data.mail_magazine}\n\n● 本日の業務内容\n${data.this_business_content}\n\n● 次回の業務内容\n${data.next_business_content}\n\n● 本日気づいたこと・勉強になったこと・課題に感じたこと\n${data.learning}\n\n● その他\n${data.others}`;
         navigator.clipboard.writeText(copyText)
         .then(function() {
             alert('コピー成功したよ');
@@ -55,31 +53,14 @@ export default function Index({ auth, data }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <button onClick={ () => {copy()} }>クリップボードへコピー</button>
-
-                        <div className="mb-4">
-                            <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">日時</label>
-                            {makeStartDate()} ~ {makeEndDate()}
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="mail_magazine" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">メルマガ</label>
-                            {data.mail_magazine}
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="this_business_content" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">本日の業務内容</label>
-                            {data.this_business_content}
-                        </div>
-                        <div>
-                            <label htmlFor="next_business_content" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">次回の業務内容</label>
-                            {data.next_business_content}
-                        </div>
-                        <div>
-                            <label htmlFor="learning" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">学んだこと</label>
-                            {data.learning}
-                        </div>
-                        <div>
-                            <label htmlFor="others" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">その他</label>
-                            {data.others}
-                        </div>
+                        <textarea
+                            id="copy_target"
+                            rows="20"
+                            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="今日の日報"
+                            value={copyText}
+                            onChange={ (e) => setCopyText(e.target.value) }
+                        ></textarea>
                     </div>
                 </div>
             </div>

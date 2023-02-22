@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DailyReportController;
+use App\Http\Controllers\DailyReportList;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodayDailyReportController;
 use Illuminate\Foundation\Application;
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'today_daily_report'], function() {
         Route::get('/', [TodayDailyReportController::class, 'index'])->name('today_daily_report');
+    });
+
+    Route::group(['prefix' => 'daily_report_list'], function() {
+        Route::get('/', [DailyReportList::class, 'index'])->name('daily_report_list');
     });
 });
 

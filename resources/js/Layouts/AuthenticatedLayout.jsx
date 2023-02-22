@@ -35,6 +35,11 @@ export default function Authenticated({ auth, header, children }) {
                                     今日の日報
                                 </NavLink>
                             </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink href={route('daily_report_list')} active={route().current('daily_report_list')}>
+                                    日報一覧
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
